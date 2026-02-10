@@ -2,9 +2,8 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "server.js",
-  "type": "module",
   "scripts": {
-    "dev":"nodemon server.js",
+    "dev": "nodemon server.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
@@ -27,6 +26,7 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.1.6",
     "morgan": "^1.10.1",
+    "multer": "^2.0.2",
     "uuid": "^13.0.0",
     "winston": "^3.19.0"
   },
