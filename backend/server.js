@@ -23,3 +23,4 @@ const server = httpServer.listen(3000, () => {
   logger.info(`server is running on ${config.PORT}`);
   logger.debug(`Environment: ${process.env.NODE_ENV || 'development'}`);
 });
+
