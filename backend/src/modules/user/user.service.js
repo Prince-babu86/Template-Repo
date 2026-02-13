@@ -1,6 +1,21 @@
 // phase 1
 
-const getMeService = async () => {};
+import ApiError from '../../utils/AppError.js';
+import userDao from './user.dao.js';
+
+const getMeService = async (id) => {
+  if (!id) {
+    throw new ApiError(404, 'Id not found');
+  }
+
+  const user = await userDao.getById(id);
+
+  if (!user) {
+    throw new ApiError(404, 'User not found');
+  }
+
+  return user;
+};
 
 const updateProfileService = async () => {};
 

@@ -1,37 +1,63 @@
 // phase 1
-const registerService = async (req, res) => {};
 
-const loginService = async (req, res) => {};
+import authDao from './auth.dao.js';
+import ApiError from '../../utils/AppError.js';
 
-const logoutService = async (req, res) => {};
+const registerService = async ({ fullname, email, password }) => {
+  const isUserExist = await authDao.findByEmail(email);
+
+  if (isUserExist) {
+    throw new ApiError(409, 'User Already exist try another email');
+  }
+
+  const userData = {
+    fullname,
+    email,
+    password,
+    role: 'USER',
+  };
+  const newUser = await authDao.createUser(userData);
+
+  if (!newUser) {
+    throw new ApiError(404, 'User not found');
+  }
+
+  newUser.password = undefined;
+
+  return newUser;
+};
+
+const loginService = async () => {};
+
+const logoutService = async () => {};
 
 // phase 2
 
-const accountLockService = async (req, res) => {};
+const accountLockService = async () => {};
 
-const emailVarificationService = async (req, res) => {};
+const emailVarificationService = async () => {};
 
-const chnagePasswordService = async (req, res) => {};
+const chnagePasswordService = async () => {};
 
-const forgotPasswordService = async (req, res) => {};
+const forgotPasswordService = async () => {};
 
-const resetPasswordService = async (req, res) => {};
+const resetPasswordService = async () => {};
 
-const loggingAttemptService = async (req, res) => {};
+const loggingAttemptService = async () => {};
 
 // phase 3
 
-const sessionmanagementService = async (req, res) => {};
+const sessionmanagementService = async () => {};
 
-const multiDeviceSessionService = async (req, res) => {};
+const multiDeviceSessionService = async () => {};
 
-const twoStepVarifacationService = async (req, res) => {};
+const twoStepVarifacationService = async () => {};
 
-const googleAuthService = async (req, res) => {};
+const googleAuthService = async () => {};
 
-const githubAuthService = async (req, res) => {};
+const githubAuthService = async () => {};
 
-const loginAlertsService = async (req, res) => {};
+const loginAlertsService = async () => {};
 
 export default {
   registerService,

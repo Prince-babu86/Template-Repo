@@ -1,6 +1,4 @@
-import {body} from 'express-validator'
-
-
+import { body } from 'express-validator';
 
 const registerValidator = [
   // Name validation
@@ -33,12 +31,8 @@ const registerValidator = [
     .withMessage('Password must contain at least one number'),
 
   // Optional role (for admin seeding only)
-  body('role')
-    .optional()
-    .isIn(['USER', 'ADMIN', 'SUPER_ADMIN'])
-    .withMessage('Invalid role value'),
+  body('role').optional().isIn(['USER', 'ADMIN', 'SUPER_ADMIN']).withMessage('Invalid role value'),
 ];
-
 
 const loginValidator = [
   // Email validation
@@ -58,6 +52,6 @@ const loginValidator = [
 ];
 
 export default {
-    registerValidator,
-    loginValidator
-}
+  registerValidator,
+  loginValidator,
+};

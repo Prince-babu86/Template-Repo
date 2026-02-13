@@ -1,9 +1,10 @@
 import express from 'express'
+import authMiddleware from '../../middlewares/auth.middleware.js';
 
 const router = express.Router();
 
-router.get("/" , (req , res) => {
-    res.send("/api/v1/users")
+router.get("/" , authMiddleware.authenticate ,  (req , res) => {
+    res.send(req.user)
 })
 
 

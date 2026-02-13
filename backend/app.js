@@ -1,11 +1,16 @@
 import express from 'express';
 import http from 'http';
 import config from './src/config/config.js';
+import errorMiddleware from './src/middlewares/error.middleware.js';
+import cookieParser from 'cookie-parser'
 
 const app = express();
 const httpServer = http.createServer(app);
 
 // middlewares
+
+app.use(express.json());
+app.use(cookieParser());
 
 // rateLimting
 
@@ -13,6 +18,7 @@ const httpServer = http.createServer(app);
 import authRoutes from './src/modules/auth/auth.route.js';
 import userRoutes from './src/modules/user/user.route.js';
 import adminRoutes from './src/modules/admin/admin.route.js';
+
 
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/users', userRoutes);
@@ -35,5 +41,6 @@ app.all('*name', (req, res, next) => {
 });
 
 // error middlewares
+app.use(errorMiddleware);
 
 export default httpServer;
