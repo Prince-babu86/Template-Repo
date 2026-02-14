@@ -1,8 +1,7 @@
-// phase 1
-
 import authDao from './auth.dao.js';
 import ApiError from '../../utils/AppError.js';
 
+// // phase 1
 const registerService = async ({ fullname, email, password }) => {
   const isUserExist = await authDao.findByEmail(email);
 
@@ -27,8 +26,27 @@ const registerService = async ({ fullname, email, password }) => {
   return newUser;
 };
 
-const loginService = async () => {};
+//
+const loginService = async ({ email, password }) => {
+  if (!email || !password) {
+    throw new Error('Email and password is required');
+  }
 
+  const user = await authDao.findByEmail(email);
+
+  if (!user) {
+    throw new ApiError(404, 'Invalid Email try again with another email');
+  }
+
+  if (!(await user.comparePassword(password))) {
+    throw new ApiError(401, 'Wrong Password');
+  }
+  user.password = undefined;
+
+  return user;
+};
+
+//
 const logoutService = async () => {};
 
 // phase 2

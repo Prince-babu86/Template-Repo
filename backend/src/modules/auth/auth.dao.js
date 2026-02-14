@@ -8,7 +8,7 @@ const createUser = async (userdata) => {
 const findById = async (userId) => {};
 
 const findByEmail = async (email) => {
-  return await User.findOne({email});
+  return await User.findOne({email}).select("+password");
 }
 
 const findOne = async (data) => {

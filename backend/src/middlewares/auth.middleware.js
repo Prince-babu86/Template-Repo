@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
 import config from '../config/config.js';
-import authService from '../modules/auth/auth.service.js';
 import ApiError from '../utils/AppError.js';
 import userService from '../modules/user/user.service.js';
 
@@ -30,6 +29,22 @@ const authenticate = async (req, res, next) => {
   }
 };
 
+const restrictTo = (...roles) => {
+  return (req, res, next) => {
+    if (!req.user) {
+      return next(new ApiError(401, 'Unauthorized'));
+    }
+
+    // roles is an array form
+    if (!roles.includes(req.user.role)) {
+      return next(new ApiError(403, 'Forbidden'));
+    }
+
+    next();
+  };
+};
+
 export default {
   authenticate,
+  restrictTo,
 };

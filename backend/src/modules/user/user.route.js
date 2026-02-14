@@ -1,11 +1,11 @@
-import express from 'express'
+import express from 'express';
 import authMiddleware from '../../middlewares/auth.middleware.js';
 
 const router = express.Router();
 
-router.get("/" , authMiddleware.authenticate ,  (req , res) => {
-    res.send(req.user)
-})
+router.get('/', authMiddleware.authenticate, authMiddleware.restrictTo('USER'), (req, res) => {
+  res.send(req.user);
+  console.log(req.user.role);
+});
 
-
-export default router
+export default router;

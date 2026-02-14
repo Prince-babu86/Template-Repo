@@ -57,9 +57,62 @@ const register = asyncHandler(async (req, res) => {
   });
 });
 
-const login = asyncHandler(async (req, res) => {});
+const login = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
 
-const logout = asyncHandler(async (req, res) => {});
+  const user = await authService.loginService({ email, password });
+
+  if (!user) {
+    throw new ApiError(404, 'User not found');
+  }
+
+  const accessToken = await generateAccessToken({
+    userId: user._id, // generate accessToken with email and _id
+    email: user.email,
+  });
+
+  const refreshToken = await generateRefreshToken({
+    userId: user._id, // generate refershToekn with user onl _id
+  });
+
+  const refreshExpirySecs = timeStringToSeconds(REFRESH_TOKEN_EXPIRATION); // convert time to seconds
+
+  const accessExpirySecs = timeStringToSeconds(ACCESS_TOKEN_EXPIRATION); // convert time to seconds
+
+  const isProduction = config.NODE_ENV === 'production';
+
+  res.cookie('refreshToken', refreshToken, {
+    httpOnly: true,
+    secure: isProduction, // Use secure cookies in production
+    sameSite: 'lax',
+    maxAge: refreshExpirySecs * 1000, // Convert to milliseconds for cookie maxAge
+  });
+
+  res.cookie('accessToken', accessToken, {
+    httpOnly: true,
+    secure: isProduction, // Use secure cookies in production
+    sameSite: 'lax',
+    maxAge: accessExpirySecs * 1000, // Convert to milliseconds for cookie maxAge
+  });
+
+  res.status(201).json({
+    sucess: true,
+    message: 'User created sucessfully',
+    refreshToken,
+    accessToken,
+    user,
+  });
+});
+
+const logout = asyncHandler(async (req, res) => {
+  res.clearCookie('accessToken');
+  res.clearCookie('refreshToken');
+
+  res.status(200).json({
+    success: true,
+    message: 'Logged out successfully',
+  });
+});
 
 // phase 2
 
