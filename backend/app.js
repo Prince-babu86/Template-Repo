@@ -2,7 +2,7 @@ import express from 'express';
 import http from 'http';
 import config from './src/config/config.js';
 import errorMiddleware from './src/middlewares/error.middleware.js';
-import cookieParser from 'cookie-parser'
+import cookieParser from 'cookie-parser';
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -14,11 +14,15 @@ app.use(cookieParser());
 
 // rateLimting
 
+// passport config
+import passport from './src/config/passport.js';
+// import passport from 'passport'
+app.use(passport.initialize());
+
 // routes
 import authRoutes from './src/modules/auth/auth.route.js';
 import userRoutes from './src/modules/user/user.route.js';
 import adminRoutes from './src/modules/admin/admin.route.js';
-
 
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/users', userRoutes);
