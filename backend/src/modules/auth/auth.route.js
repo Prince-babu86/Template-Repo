@@ -4,6 +4,7 @@ import authValidator from './auth.validator.js';
 import authController from './auth.controller.js';
 import authMiddleware from '../../middlewares/auth.middleware.js';
 import passport from 'passport';
+import sendEmail from '../../utils/sendEmail.js';
 const router = express.Router();
 
 // routes
