@@ -120,7 +120,10 @@ const accountLock = asyncHandler(async (req, res) => {});
 
 const emailVarification = asyncHandler(async (req, res) => {});
 
-const chnagePassword = asyncHandler(async (req, res) => {});
+const chnagePassword = asyncHandler(async (req, res) => {
+
+ 
+});
 
 const forgotPassword = asyncHandler(async (req, res) => {});
 

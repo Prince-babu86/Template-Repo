@@ -1,6 +1,7 @@
 import authDao from './auth.dao.js';
 import ApiError from '../../utils/AppError.js';
 
+
 // // phase 1
 const registerService = async ({ fullname, email, password }) => {
   const isUserExist = await authDao.findByEmail(email);
@@ -55,7 +56,8 @@ const accountLockService = async () => {};
 
 const emailVarificationService = async () => {};
 
-const chnagePasswordService = async () => {};
+const chnagePasswordService = async ({userId , currentPassword , newPassword}) => {
+};
 
 const forgotPasswordService = async () => {};
 

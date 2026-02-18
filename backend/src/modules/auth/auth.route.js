@@ -22,13 +22,22 @@ router.route('/logout').get(authMiddleware.authenticate, authController.logout);
 // Route to initiate Google OAuth flow
 router.route('/google').get(passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-// Callback route that Google will redirect to after authentication
+// 5.  Callback route that Google will redirect to after authentication
 
 router
   .route('/google/callback')
   .get(
     passport.authenticate('google', { failureRedirect: '/login', session: false }),
     authController.googleAuthCallback
+  );
+
+// 6. change password route
+router
+  .route('/change-password')
+  .patch(
+    authMiddleware.authenticate,
+    validate(authValidator.changePasswordValidator),
+    authController.chnagePassword
   );
 
 export default router;

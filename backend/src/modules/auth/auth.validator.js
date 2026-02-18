@@ -51,7 +51,33 @@ const loginValidator = [
     .withMessage('Password must be at least 6 characters'),
 ];
 
+ const changePasswordValidator = [
+  // Old password
+  body('currentPassword')
+    .notEmpty()
+    .withMessage('Old password is required'),
+
+  // New password
+  body('newPassword')
+   .notEmpty()
+    .withMessage('Password is required')
+    .isLength({ min: 6 })
+    .withMessage('Password must be at least 6 characters'),
+
+  // Confirm password
+  body('confirmPassword')
+    .notEmpty()
+    .withMessage('Confirm password is required')
+    .custom((value, { req }) => {
+      if (value !== req.body.newPassword) {
+        throw new Error('Passwords do not match');
+      }
+      return true;
+    }),
+];
+
 export default {
   registerValidator,
   loginValidator,
+  changePasswordValidator
 };
