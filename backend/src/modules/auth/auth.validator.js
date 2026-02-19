@@ -55,7 +55,9 @@ const loginValidator = [
   // Old password
   body('currentPassword')
     .notEmpty()
-    .withMessage('Old password is required'),
+    .withMessage('Old password is required')
+    .isLength({ min: 6 })
+    .withMessage('Old password must be at least 6 characters'),
 
   // New password
   body('newPassword')

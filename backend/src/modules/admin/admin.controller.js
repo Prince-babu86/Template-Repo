@@ -3,6 +3,14 @@ import adminService from './admin.service.js';
 
 // phase 1
 
+
+const createUser = asyncHandler(async (req, res) => {
+  const { fullname, email, password, role } = req.body;
+
+  console.log(fullname , email , password , role);
+});
+
+
 const getAllUsers = asyncHandler(async (req, res) => {});
 
 const blockUser = asyncHandler(async (req, res) => {});
@@ -33,4 +41,5 @@ export default {
   viewLoginLogs,
   forcePasswordReset,
   adminDashBoard,
+  createUser
 };

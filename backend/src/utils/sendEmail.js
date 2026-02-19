@@ -14,7 +14,7 @@ const sendEmail = async ({ to, subject, text, html }) => {
     });
 
     logger.info(`Email sent: ${info.messageId}`);
-    logger.info(transporter.options.auth.user);
+    // logger.info(transporter.options.auth.user);
   } catch (error) {
     logger.error('Error sending email:', error);
     throw new ApiError(409, 'Failed to send email');

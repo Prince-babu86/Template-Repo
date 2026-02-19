@@ -59,8 +59,12 @@ const register = asyncHandler(async (req, res) => {
 
 const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
+  const ip = req.ip || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  const device = req.headers['user-agent'] || 'Unknown device';
+  const location = 'Unknown location'; // You can use a geolocation service to get location from IP
+  const time = new Date().toLocaleString();
 
-  const user = await authService.loginService({ email, password });
+  const user = await authService.loginService({ email, password, ip, device, location, time });
 
   if (!user) {
     throw new ApiError(404, 'User not found');
@@ -97,7 +101,7 @@ const login = asyncHandler(async (req, res) => {
 
   res.status(201).json({
     sucess: true,
-    message: 'User created sucessfully',
+    message: 'User Login sucessfully',
     refreshToken,
     accessToken,
     user,
@@ -121,11 +125,41 @@ const accountLock = asyncHandler(async (req, res) => {});
 const emailVarification = asyncHandler(async (req, res) => {});
 
 const chnagePassword = asyncHandler(async (req, res) => {
+  const { currentPassword, newPassword } = req.body;
 
- 
+  if (!req.user || !req.user.id) {
+    throw new ApiError(401, 'Unauthorized');
+  }
+
+  const userEmail = req.user.email;
+  const userId = req.user._id;
+
+  await authService.chnagePasswordService({ userId, currentPassword, newPassword });
+
+  res.status(200).json({
+    sucess: true,
+    message: 'Password changed sucessfully',
+  });
 });
 
-const forgotPassword = asyncHandler(async (req, res) => {});
+const forgotPassword = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    throw new ApiError(400, 'Email is required');
+  }
+
+  const user = await authService.forgotPasswordService({ email });
+
+  if (!user) {
+    throw new ApiError(404, 'User Not found');
+  }
+
+  res.status(200).json({
+    sucess: true,
+    message: 'Password reset link sent to email',
+  });
+});
 
 const resetPassword = asyncHandler(async (req, res) => {});
 
