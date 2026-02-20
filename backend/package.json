@@ -2,6 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "dev": "nodemon server.js",
     "lint": "eslint .",
@@ -9,6 +10,7 @@
     "format": "prettier --write .",
     "test": "cross-env NODE_ENV=testing jest",
     "prepare": "test \"$NODE_ENV\" != \"production\" && husky install || exit 0",
+    "seed:admin": "node scripts/createSuperAdmin.js",
     "start": "NODE_ENV=production node server.js"
   },
   "keywords": [],
