@@ -25,7 +25,6 @@ const createAdminValidation = [
     .withMessage('Password must contain at least one uppercase letter'),
 ];
 
-
 export default {
-    createAdminValidation
-}
+  createAdminValidation,
+};

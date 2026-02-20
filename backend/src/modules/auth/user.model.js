@@ -59,6 +59,22 @@ const userSchema = new mongoose.Schema(
     lastLoginAt: {
       type: Date,
     },
+
+    // for email verification and password reset
+
+    emailVerificationToken: {
+      type: String,
+    },
+    emailVerificationSentAt: {
+      type: Date,
+    },
+    emailVerificationExpiresAt: {
+      type: Date,
+    },
+    emailVerificationAttempts: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,
@@ -66,11 +82,10 @@ const userSchema = new mongoose.Schema(
 );
 
 userSchema.pre('save', async function () {
-
-   if (this.googleId === null) {
+  if (this.googleId === null) {
     this.googleId = undefined;
   }
-  
+
   if (!this.password) return;
   if (!this.isModified('password')) return;
   this.password = await bcrypt.hash(this.password, 12);
