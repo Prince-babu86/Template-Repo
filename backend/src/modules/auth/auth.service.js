@@ -4,7 +4,7 @@ import authEmail from './auth.email.js';
 import logger from '../../loggers/winston.logger.js';
 
 // // phase 1
-const registerService = async ({ fullname, email, password  , ip}) => {
+const registerService = async ({ fullname, email, password, ip }) => {
   const isUserExist = await authDao.findByEmail(email);
 
   if (isUserExist) {
@@ -38,7 +38,7 @@ const registerService = async ({ fullname, email, password  , ip}) => {
 };
 
 //
-const loginService = async ({  email, password , ip, device, location, time , }) => {
+const loginService = async ({ email, password, ip, device, location, time }) => {
   if (!email || !password) {
     throw new Error('Email and password is required');
   }
@@ -53,16 +53,18 @@ const loginService = async ({  email, password , ip, device, location, time , })
     throw new ApiError(401, 'Wrong Password');
   }
 
-  authEmail.loginEmail({
-    email: user.email,
-    fullname: user.fullname,
-    ip,
-    device,
-    location,
-    time,
-  }).catch((error) => {
-    logger.error('Error sending login alert email:', error);
-  })
+  authEmail
+    .loginEmail({
+      email: user.email,
+      fullname: user.fullname,
+      ip,
+      device,
+      location,
+      time,
+    })
+    .catch((error) => {
+      logger.error('Error sending login alert email:', error);
+    });
   user.password = undefined;
 
   return user;

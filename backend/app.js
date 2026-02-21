@@ -3,6 +3,7 @@ import http from 'http';
 import config from './src/config/config.js';
 import errorMiddleware from './src/middlewares/error.middleware.js';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -11,6 +12,12 @@ const httpServer = http.createServer(app);
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  })
+);
 
 // rateLimting
 

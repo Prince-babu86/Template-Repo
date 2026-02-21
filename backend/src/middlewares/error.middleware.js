@@ -19,7 +19,7 @@ const errorMiddleware = (err, req, res, next) => {
     }),
   };
 
-  res.status(statusCode).json(response);
+  return res.status(statusCode).json(response);
 };
 
 export default errorMiddleware;

@@ -48,7 +48,7 @@ const register = asyncHandler(async (req, res) => {
     maxAge: accessExpirySecs * 1000, // Convert to milliseconds for cookie maxAge
   });
 
-  res.status(201).json({
+  return res.status(201).json({
     sucess: true,
     message: 'User created sucessfully',
     refreshToken,
@@ -99,12 +99,12 @@ const login = asyncHandler(async (req, res) => {
     maxAge: accessExpirySecs * 1000, // Convert to milliseconds for cookie maxAge
   });
 
-  res.status(201).json({
+  return res.status(201).json({
     sucess: true,
     message: 'User Login sucessfully',
-    refreshToken,
-    accessToken,
-    user,
+    // refreshToken,
+    // accessToken,
+    // user,
   });
 });
 
@@ -112,7 +112,7 @@ const logout = asyncHandler(async (req, res) => {
   res.clearCookie('accessToken');
   res.clearCookie('refreshToken');
 
-  res.status(200).json({
+  return res.status(200).json({
     success: true,
     message: 'Logged out successfully',
   });
@@ -212,12 +212,14 @@ const googleAuthCallback = asyncHandler(async (req, res) => {
     maxAge: accessExpirySecs * 1000, // Convert to milliseconds for cookie maxAge
   });
 
+  res.redirect('http://localhost:5173/');
+
   res.status(200).json({
     success: true,
     message: 'User authenticated with Google successfully',
-    refreshToken, // remove after testing
-    accessToken, // remove after testing
-    user, // remove after testing
+    // refreshToken, // remove after testing
+    // accessToken, // remove after testing
+    // user, // remove after testing
   });
 });
 
