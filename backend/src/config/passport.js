@@ -9,7 +9,7 @@ passport.use(
     {
       clientID: config.clientID,
       clientSecret: config.clientSecret,
-      callbackURL: config.callbackURL,
+      callbackURL:config.NODE_ENV === "production" ? config.callbackURL : "/api/v1/auth/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
       try {

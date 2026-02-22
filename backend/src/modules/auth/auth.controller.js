@@ -1,5 +1,6 @@
 import config from '../../config/config.js';
 import { ACCESS_TOKEN_EXPIRATION, REFRESH_TOKEN_EXPIRATION } from '../../constants/constants.js';
+import logger from '../../loggers/winston.logger.js';
 import ApiError from '../../utils/AppError.js';
 import asyncHandler from '../../utils/asyncHandler.js';
 import generateAccessToken from '../../utils/generateAccessToken.js';
@@ -37,14 +38,14 @@ const register = asyncHandler(async (req, res) => {
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
     secure: isProduction, // Use secure cookies in production
-    sameSite: 'none',
+    sameSite: isProduction ? 'none' : "lax",
     maxAge: refreshExpirySecs * 1000, // Convert to milliseconds for cookie maxAge
   });
 
   res.cookie('accessToken', accessToken, {
     httpOnly: true,
     secure: isProduction, // Use secure cookies in production
-    sameSite: 'none',
+    sameSite: isProduction ? 'none' : "lax",
     maxAge: accessExpirySecs * 1000, // Convert to milliseconds for cookie maxAge
   });
 
@@ -88,16 +89,19 @@ const login = asyncHandler(async (req, res) => {
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
     secure: isProduction, // Use secure cookies in production
-    sameSite: 'none',
+     sameSite: isProduction ? 'none' : "lax",
     maxAge: refreshExpirySecs * 1000, // Convert to milliseconds for cookie maxAge
   });
 
   res.cookie('accessToken', accessToken, {
     httpOnly: true,
     secure: isProduction, // Use secure cookies in production
-    sameSite: 'none',
+    sameSite: isProduction ? 'none' : "lax",
     maxAge: accessExpirySecs * 1000, // Convert to milliseconds for cookie maxAge
   });
+
+
+  logger.info(isProduction);
 
   return res.status(201).json({
     sucess: true,
@@ -106,6 +110,8 @@ const login = asyncHandler(async (req, res) => {
     // accessToken,
     // user,
   });
+
+
 });
 
 const logout = asyncHandler(async (req, res) => {
@@ -201,14 +207,14 @@ const googleAuthCallback = asyncHandler(async (req, res) => {
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
     secure: isProduction, // Use secure cookies in production
-    sameSite: 'none',
+    sameSite: isProduction ? 'none' : "lax",
     maxAge: refreshExpirySecs * 1000, // Convert to milliseconds for cookie maxAge
   });
 
   res.cookie('accessToken', accessToken, {
     httpOnly: true,
     secure: isProduction, // Use secure cookies in production
-    sameSite: 'none',
+   sameSite: isProduction ? 'none' : "lax",
     maxAge: accessExpirySecs * 1000, // Convert to milliseconds for cookie maxAge
   });
 

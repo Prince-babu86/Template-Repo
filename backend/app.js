@@ -11,15 +11,25 @@ const httpServer = http.createServer(app);
 
 // middlewares
 
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(helmet());
-app.use(
-  cors({
-    origin: config.frontend_url,
-    credentials: true,
-  })
-);
+
+// allowed origins
+const allowedOrigins = config.NODE_ENV === "production"
+  ? [config.frontend_url?.trim()]
+  : ["http://localhost:5173", "http://localhost:3000"];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error("CORS not allowed"));
+  },
+  credentials: true,
+}));
 
 // rateLimting
 

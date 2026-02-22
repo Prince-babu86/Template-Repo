@@ -17,7 +17,7 @@ const config = {
   emailPassword: process.env.GOOGLE_EMAIL_PASSWORD,
   emailHost: process.env.EMAIL_HOST,
   emailPort: process.env.EMAIL_PORT,
-  emailSecure: process.env.EMAIL_SECURE === 'true',
+  emailSecure: process.env.EMAIL_SECURE === 'false',
   frontend_url:process.env.FRONTEND_URL,
 
   // super-amin

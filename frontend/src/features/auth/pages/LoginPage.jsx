@@ -3,6 +3,8 @@ import { FcGoogle } from "react-icons/fc";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { NavLink } from "react-router-dom";
 import AuthApi from "../apis/AuthApi";
+import { useNavigate } from "react-router-dom";
+
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -10,6 +12,9 @@ export default function Login() {
     email: "",
     password: "",
   });
+
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -27,16 +32,19 @@ export default function Login() {
       return;
     }
 
-    const { email, password } = user;
-
     try {
-      const res = await AuthApi.login({ email, password });
-      alert(res.data.message);
-    } catch (error) {
-      console.log(error.response.data);
-    }
+      setLoading(true);
 
-    return;
+      const {email , password} = user
+
+       await AuthApi.login({email , password});
+
+      navigate("/");
+    } catch (error) {
+      console.log(error.response?.data);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -99,10 +107,10 @@ export default function Login() {
 
           {/* Login Button */}
           <button
-            onSubmit={handleSubmit}
-            className="w-full py-3 rounded-xl font-medium text-black bg-white hover:bg-gray-200 transition"
+            disabled={loading}
+            className="w-full py-3 rounded-xl font-medium text-black bg-white hover:bg-gray-200 transition disabled:opacity-50"
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
