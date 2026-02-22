@@ -5,7 +5,17 @@ import userService from './user.service.js';
 
 // phase 1
 
-const getMe = asyncHandler(async (req, res) => {});
+const getMe = asyncHandler(async (req, res) => {
+  const user = req.user;
+  if (!user) {
+    throw new ApiError(404, 'User not found');
+  }
+
+  return res.status(200).json({
+    sucess: true,
+    user,
+  });
+});
 
 const updateProfile = asyncHandler(async (req, res) => {});
 

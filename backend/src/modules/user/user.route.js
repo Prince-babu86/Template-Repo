@@ -5,10 +5,7 @@ import userController from './user.controller.js';
 import userRateLimter from './user.rateLimter.js';
 const router = express.Router();
 
-router.get('/', authMiddleware.authenticate, authMiddleware.restrictTo('USER'), (req, res) => {
-  res.send(req.user);
-  console.log(req.user.role);
-});
+router.get('/me', authMiddleware.authenticate, userController.getMe);
 
 // phase 1
 // verify emaail ,
@@ -20,14 +17,18 @@ router.get('/', authMiddleware.authenticate, authMiddleware.restrictTo('USER'), 
 // verify email
 router
   .route('/send-verification-email')
-  .post(authMiddleware.authenticate,
+  .post(
+    authMiddleware.authenticate,
     userRateLimter.otpRateLimiter,
-    userController.sendVerificationEmail);
+    userController.sendVerificationEmail
+  );
 
-router.route('/verify-email')
-.post(
-  authMiddleware.authenticate,
-  userRateLimter.otpVerificationLimiter,
-  userController.verifyEmail);
+router
+  .route('/verify-email')
+  .post(
+    authMiddleware.authenticate,
+    userRateLimter.otpVerificationLimiter,
+    userController.verifyEmail
+  );
 
 export default router;

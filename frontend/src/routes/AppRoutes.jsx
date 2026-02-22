@@ -2,12 +2,13 @@ import { createBrowserRouter } from "react-router-dom";
 import AppLayout from "../App/AppLayout";
 import PublicRoutes from "./PublicRoutes";
 import Home from "../pages/Home";
-import LoginPage from '../features/auth/pages/LoginPage'
-import SignUpPage from '../features/auth/pages/SignUpPage'
+import LoginPage from "../features/auth/pages/LoginPage";
+import SignUpPage from "../features/auth/pages/SignUpPage";
 import PublicLayout from "../App/PublicLayout";
 import PrivateRoute from "./PrivateRoute";
 import DashboardPage from "../features/admin/DashboardPage";
-
+import NotFound from "../pages/PageNotFound";
+import Reports from "../pages/Report";
 
 export const router = createBrowserRouter([
   {
@@ -17,7 +18,7 @@ export const router = createBrowserRouter([
         path: "/login",
         element: (
           <PublicRoutes>
-            <LoginPage/>
+            <LoginPage />
           </PublicRoutes>
         ),
       },
@@ -39,13 +40,27 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path:"/dashboard",
-        element:(
+        path: "/dashboard",
+        element: (
           <PrivateRoute>
-            <DashboardPage/>
+            <DashboardPage />
           </PrivateRoute>
-        )
-      }
+        ),
+      },
+      {
+        path: "/reports",
+        element: (
+          <PrivateRoute>
+            <Reports />
+          </PrivateRoute>
+        ),
+      },
+
+      // 404 page not found
+      {
+        path: "*",
+        element: <NotFound />,
+      },
     ],
   },
 ]);
