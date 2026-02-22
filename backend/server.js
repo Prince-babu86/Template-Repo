@@ -17,10 +17,8 @@ process.on('unhandledRejection', (reason, promise) => {
 
 // connect to database
 connectDb();
-console.log(config);
 // listen server
 const server = httpServer.listen(config.PORT, () => {
   logger.info(`server is running on ${config.PORT}`);
   logger.debug(`Environment: ${process.env.NODE_ENV || 'development'}`);
 });
-
