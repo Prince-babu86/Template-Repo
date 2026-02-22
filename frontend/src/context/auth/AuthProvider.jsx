@@ -3,6 +3,7 @@ import AuthContext from "./Authcontext";
 import axios from "../../config/axios";
 import Loader from "../../components/layout/Loading";
 
+
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -10,8 +11,8 @@ const AuthProvider = ({ children }) => {
   // 🔹 Fetch current user
   const getUser = async () => {
     try {
-      const res = await axios.get("/api/v1/users/me");
-      setUser(res.data.user);
+      const res = await axios.get("/api/v1/users/me" , {withCredentials:true});
+      setUser(res?.data?.user);
     } catch (err) {
       setUser(null);
       console.log(err);
@@ -34,6 +35,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     getUser();
   }, []);
+
 
   
 

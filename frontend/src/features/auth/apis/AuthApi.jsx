@@ -1,5 +1,5 @@
 import axiosInstance from "../../../config/axios";
-import config from "../../../config/config";
+// import config from "../../../config/config";
 
 const register = async ({ fullname, email, password }) => {
   return await axiosInstance.post("/api/v1/auth/register", {
@@ -17,7 +17,7 @@ const login = async ({ email, password }) => {
 };
 
 const googleLogin = async () => {
-  console.log(config.ApiUrl);
+  // console.log(config.ApiUrl);
  window.location.href = `${import.meta.env.VITE_API_URL}/api/v1/auth/google`;
 };
 

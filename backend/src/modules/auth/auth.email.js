@@ -6,28 +6,31 @@ import sendEmail from '../../utils/sendEmail.js';
 const registerEmail = async ({ email, fullname }) => {
   const { subject, text, html } = registerTemplate({ fullname });
 
-  await sendEmail({
-    to: email,
-    subject,
-    text,
-    html,
-  });
+  try {
+    await sendEmail({
+      to: email,
+      subject,
+      text,
+      html,
+    });
+  } catch (error) {
+    logger.error('Sending email on register ');
+  }
 };
 
-
-const loginEmail = async ({email, fullname, ip, device, location, time}) => {
-    const { subject, text, html } = loginAlertTemplate({ fullname, ip, device, location, time });
-   try {
-     await sendEmail({
-        to: email,
-        subject,
-        text,
-        html,
+const loginEmail = async ({ email, fullname, ip, device, location, time }) => {
+  const { subject, text, html } = loginAlertTemplate({ fullname, ip, device, location, time });
+  try {
+    await sendEmail({
+      to: email,
+      subject,
+      text,
+      html,
     });
-   } catch (error) {
-    logger.error("Sending email on login ")
-   }
-}
+  } catch (error) {
+    logger.error('Sending email on login ');
+  }
+};
 
 export default {
   registerEmail,

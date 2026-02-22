@@ -10,6 +10,9 @@ const transporter = nodemailer.createTransport({
     user: config.emailUser,
     pass: config.emailPassword,
   },
+  connectionTimeout: 10000, // 10 sec
+  greetingTimeout: 5000,
+  socketTimeout: 10000,
 });
 
 transporter.verify((error, sucess) => {
