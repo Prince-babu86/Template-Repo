@@ -18,7 +18,14 @@ const config = {
   emailHost: process.env.EMAIL_HOST,
   emailPort: process.env.EMAIL_PORT,
   emailSecure: process.env.EMAIL_SECURE === 'true',
-  frontend_url:process.env.FRONTEND_URL
+  frontend_url:process.env.FRONTEND_URL,
+
+  // super-amin
+
+  superAdminEmail:process.env.SUPER_ADMIN_EMAIL,
+  superAdminName:process.env.SUPER_ADMIN_NAME,
+  superAdminPassword:process.env.SUPER_ADMIN_PASSWORD,
+  superAdminRole:process.env.SUPER_ADMIN_ROLE
 };
 
 export default config;

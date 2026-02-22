@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import User from '../src/modules/auth/user.model.js';
+import config from '../src/config/config.js';
+import logger from '../src/loggers/winston.logger.js'
 
 dotenv.config();
 
@@ -26,24 +28,24 @@ const createSuperAdmin = async () => {
     }
 
     await User.create({
-      fullname: 'SuperAdmin',
-      email: 'superadmin@gmail.com',
-      password: 'superadmin123',
-      role: 'SUPER_ADMIN',
+      fullname:config.superAdminName,
+      email: config.superAdminEmail,
+      password:config.superAdminPassword,
+      role:config.superAdminRole,
     });
 
-    console.log('Super admin created successfully');
+  logger.info('Super admin created successfully');
     // process.exit();
 
     await mongoose.disconnect();
     process.exit(0);
   } catch (err) {
-    console.error('Error creating super admin:', err);
+    logger.error('Error creating super admin:', err);
     process.exit(1);
   }
 };
 
 createSuperAdmin().catch((err) => {
-  console.error('Unexpected error:', err);
+  logger.error('Unexpected error:', err);
   process.exit(1);
 });

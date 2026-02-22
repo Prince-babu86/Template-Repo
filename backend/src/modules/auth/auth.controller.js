@@ -37,23 +37,23 @@ const register = asyncHandler(async (req, res) => {
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
     secure: isProduction, // Use secure cookies in production
-    sameSite: 'lax',
+    sameSite: 'none',
     maxAge: refreshExpirySecs * 1000, // Convert to milliseconds for cookie maxAge
   });
 
   res.cookie('accessToken', accessToken, {
     httpOnly: true,
     secure: isProduction, // Use secure cookies in production
-    sameSite: 'lax',
+    sameSite: 'none',
     maxAge: accessExpirySecs * 1000, // Convert to milliseconds for cookie maxAge
   });
 
   return res.status(201).json({
     sucess: true,
     message: 'User created sucessfully',
-    refreshToken,
-    accessToken,
-    user,
+    // refreshToken,
+    // accessToken,
+    // user,
   });
 });
 
@@ -88,14 +88,14 @@ const login = asyncHandler(async (req, res) => {
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
     secure: isProduction, // Use secure cookies in production
-    sameSite: 'lax',
+    sameSite: 'none',
     maxAge: refreshExpirySecs * 1000, // Convert to milliseconds for cookie maxAge
   });
 
   res.cookie('accessToken', accessToken, {
     httpOnly: true,
     secure: isProduction, // Use secure cookies in production
-    sameSite: 'lax',
+    sameSite: 'none',
     maxAge: accessExpirySecs * 1000, // Convert to milliseconds for cookie maxAge
   });
 
@@ -201,18 +201,18 @@ const googleAuthCallback = asyncHandler(async (req, res) => {
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
     secure: isProduction, // Use secure cookies in production
-    sameSite: 'lax',
+    sameSite: 'none',
     maxAge: refreshExpirySecs * 1000, // Convert to milliseconds for cookie maxAge
   });
 
   res.cookie('accessToken', accessToken, {
     httpOnly: true,
     secure: isProduction, // Use secure cookies in production
-    sameSite: 'lax',
+    sameSite: 'none',
     maxAge: accessExpirySecs * 1000, // Convert to milliseconds for cookie maxAge
   });
 
-  res.redirect('http://localhost:5173/');
+  res.redirect(config.frontend_url);
 
   res.status(200).json({
     success: true,

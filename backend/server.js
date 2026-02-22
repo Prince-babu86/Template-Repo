@@ -19,7 +19,7 @@ process.on('unhandledRejection', (reason, promise) => {
 connectDb();
 
 // listen server
-const server = httpServer.listen(3000, () => {
+const server = httpServer.listen(config.PORT, () => {
   logger.info(`server is running on ${config.PORT}`);
   logger.debug(`Environment: ${process.env.NODE_ENV || 'development'}`);
 });
