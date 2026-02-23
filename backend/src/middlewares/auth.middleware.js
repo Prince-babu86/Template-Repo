@@ -6,8 +6,10 @@ import userService from '../modules/user/user.service.js';
 const authenticate = async (req, res, next) => {
   try {
     let token;
-    if (req?.cookies && req.cookies?.accessToken) {
-      token = req.cookies?.accessToken;
+    if (req.cookies?.accessToken) {
+      token = req.cookies.accessToken;
+    } else if (req.headers.authorization?.startsWith('Bearer ')) {
+      token = req.headers.authorization.split(' ')[1];
     }
 
     if (!token) {
