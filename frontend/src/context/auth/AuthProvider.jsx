@@ -39,7 +39,7 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     getUser();
-  }, [loading]);
+  }, []);
 
   const value = {
     user,
