@@ -28,6 +28,7 @@ const AuthProvider = ({ children }) => {
       await axios.get("/api/v1/auth/logout");
       await getUser();
       setLoading(true)
+      console.log(`logout is running`);
     } catch (err) {
       console.error("Logout error:", err);
     } finally {

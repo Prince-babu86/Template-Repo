@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import UseAuth from "../../context/auth/UseAuth";
- // your custom hook
+// your custom hook
 
 const menuItems = [
   { name: "Overview", icon: LayoutDashboard, path: "/" },
@@ -23,14 +23,13 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const { logout, user } = UseAuth(); // from your auth system
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     navigate("/login");
   };
 
   return (
     <div className="h-screen w-64 bg-[#030712] border-r-[0.1px] border-gray-500 text-white p-4 flex flex-col justify-between">
-
       {/* Top Section */}
       <div>
         {/* Logo */}
@@ -68,7 +67,6 @@ const Sidebar = () => {
 
       {/* Bottom Section */}
       <div className="space-y-3">
-
         {/* Profile */}
         <div className="flex items-center gap-3 bg-[#1e293b] p-3 rounded-lg">
           <img
@@ -90,7 +88,6 @@ const Sidebar = () => {
           <LogOut size={18} />
           <span className="text-sm">Logout</span>
         </button>
-
       </div>
     </div>
   );
