@@ -118,8 +118,8 @@ const logout = asyncHandler(async (req, res) => {
     sameSite: 'None',
   };
 
-  res.clearCookie('accessToken' , cookieOptions);
-  res.clearCookie('refreshToken' , cookieOptions);
+  res.clearCookie('accessToken', cookieOptions);
+  res.clearCookie('refreshToken', cookieOptions);
 
   return res.status(200).json({
     success: true,
@@ -223,7 +223,7 @@ const googleAuthCallback = asyncHandler(async (req, res) => {
 
   res.redirect(config.frontend_url);
 
- return res.status(200).json({
+  return res.status(200).json({
     success: true,
     message: 'User authenticated with Google successfully',
     // refreshToken, // remove after testing
