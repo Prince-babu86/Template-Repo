@@ -38,14 +38,14 @@ const register = asyncHandler(async (req, res) => {
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
     secure: isProduction, // Use secure cookies in production
-    sameSite: isProduction ? 'none' : "lax",
+    sameSite: isProduction ? 'none' : 'lax',
     maxAge: refreshExpirySecs * 1000, // Convert to milliseconds for cookie maxAge
   });
 
   res.cookie('accessToken', accessToken, {
     httpOnly: true,
     secure: isProduction, // Use secure cookies in production
-    sameSite: isProduction ? 'none' : "lax",
+    sameSite: isProduction ? 'none' : 'lax',
     maxAge: accessExpirySecs * 1000, // Convert to milliseconds for cookie maxAge
   });
 
@@ -89,17 +89,16 @@ const login = asyncHandler(async (req, res) => {
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
     secure: isProduction, // Use secure cookies in production
-     sameSite: isProduction ? 'none' : "lax",
+    sameSite: isProduction ? 'none' : 'lax',
     maxAge: refreshExpirySecs * 1000, // Convert to milliseconds for cookie maxAge
   });
 
   res.cookie('accessToken', accessToken, {
     httpOnly: true,
     secure: isProduction, // Use secure cookies in production
-    sameSite: isProduction ? 'none' : "lax",
+    sameSite: isProduction ? 'none' : 'lax',
     maxAge: accessExpirySecs * 1000, // Convert to milliseconds for cookie maxAge
   });
-
 
   logger.info(isProduction);
 
@@ -110,13 +109,17 @@ const login = asyncHandler(async (req, res) => {
     // accessToken,
     // user,
   });
-
-
 });
 
 const logout = asyncHandler(async (req, res) => {
-  res.clearCookie('accessToken');
-  res.clearCookie('refreshToken');
+  const cookieOptions = {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'None',
+  };
+
+  res.clearCookie('accessToken' , cookieOptions);
+  res.clearCookie('refreshToken' , cookieOptions);
 
   return res.status(200).json({
     success: true,
@@ -207,14 +210,14 @@ const googleAuthCallback = asyncHandler(async (req, res) => {
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
     secure: isProduction, // Use secure cookies in production
-    sameSite: isProduction ? 'none' : "lax",
+    sameSite: isProduction ? 'none' : 'lax',
     maxAge: refreshExpirySecs * 1000, // Convert to milliseconds for cookie maxAge
   });
 
   res.cookie('accessToken', accessToken, {
     httpOnly: true,
     secure: isProduction, // Use secure cookies in production
-   sameSite: isProduction ? 'none' : "lax",
+    sameSite: isProduction ? 'none' : 'lax',
     maxAge: accessExpirySecs * 1000, // Convert to milliseconds for cookie maxAge
   });
 

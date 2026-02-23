@@ -3,7 +3,6 @@ import AuthContext from "./Authcontext";
 import axios from "../../config/axios";
 import Loader from "../../components/layout/Loading";
 
-
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -11,7 +10,9 @@ const AuthProvider = ({ children }) => {
   // 🔹 Fetch current user
   const getUser = async () => {
     try {
-      const res = await axios.get("/api/v1/users/me" , {withCredentials:true});
+      const res = await axios.get("/api/v1/users/me", {
+        withCredentials: true,
+      });
       setUser(res?.data?.user);
     } catch (err) {
       setUser(null);
@@ -25,19 +26,19 @@ const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       await axios.get("/api/v1/auth/logout");
+      await getUser();
+      setLoading(true)
     } catch (err) {
       console.error("Logout error:", err);
     } finally {
       setUser(null);
+      setLoading(false)
     }
   };
 
   useEffect(() => {
     getUser();
-  }, []);
-
-
-  
+  }, [loading]);
 
   const value = {
     user,
