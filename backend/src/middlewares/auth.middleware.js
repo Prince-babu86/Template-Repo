@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import config from '../config/config.js';
 import ApiError from '../utils/AppError.js';
 import userService from '../modules/user/user.service.js';
+import logger from '../loggers/winston.logger.js';
 
 const authenticate = async (req, res, next) => {
   try {
@@ -11,6 +12,8 @@ const authenticate = async (req, res, next) => {
     } else if (req.headers.authorization?.startsWith('Bearer')) {
       token = req.headers.authorization.split(' ')[1];
     }
+
+    logger.info(token.toString());
 
     if (!token) {
       throw new ApiError(401, 'You are not logged in. Please log in to get access.');
