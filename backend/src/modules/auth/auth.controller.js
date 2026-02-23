@@ -223,7 +223,7 @@ const googleAuthCallback = asyncHandler(async (req, res) => {
 
   res.redirect(config.frontend_url);
 
-  res.status(200).json({
+ return res.status(200).json({
     success: true,
     message: 'User authenticated with Google successfully',
     // refreshToken, // remove after testing

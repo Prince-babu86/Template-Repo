@@ -10,9 +10,7 @@ const AuthProvider = ({ children }) => {
   // 🔹 Fetch current user
   const getUser = async () => {
     try {
-      const res = await axios.get("/api/v1/users/me", {
-        withCredentials: true,
-      });
+      const res = await axios.get("/api/v1/users/me");
       setUser(res?.data?.user);
       console.log(res);
 
