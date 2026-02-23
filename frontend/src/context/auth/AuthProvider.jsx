@@ -50,7 +50,7 @@ const AuthProvider = ({ children }) => {
     logout,
   };
 
-  console.log(user);
+  console.log(value);
 
   return (
     <AuthContext.Provider value={value}>

@@ -11,6 +11,8 @@ const getMe = asyncHandler(async (req, res) => {
     throw new ApiError(404, 'User not found');
   }
 
+  logger.info(`${user.fullname} with ${user.email} thats role is ${user.role}`)
+
   return res.status(200).json({
     sucess: true,
     user,
